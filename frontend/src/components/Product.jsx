@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
+
 const Product = (props) => {
     return ( 
         <Card className="my-3 p-3 rounded">
@@ -16,7 +17,6 @@ const Product = (props) => {
                 </Link>
                 <Card.Text as="div">
                     <div className="my-3">
-                        {props.product.rating} from {props.product.numReviews} reviews
                         <Rating value={props.product.rating} text={`${props.product.numReviews} reviews`} color={'#f8e825'}/>
                     </div>
                 </Card.Text>

@@ -36,4 +36,8 @@ Thumbs.db
 __pycache__/
 **/__pycache__/
 
+# Ignore Python testing environments
+**/backend/static/
+
+
 
