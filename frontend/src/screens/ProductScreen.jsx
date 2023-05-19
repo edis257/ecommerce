@@ -1,8 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Container, Card } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Container,
+  Card,
+  Form,
+} from "react-bootstrap";
 import Rating from "../components/Rating";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -10,8 +18,19 @@ import Message from "../components/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../reducers/productSlice";
 
-const ProductScreen = () => {
+
+
+const ProductScreen = (props) => {
+  // get id
   const { id } = useParams();
+  const navigate = useNavigate();
+  //NOT REDUX
+  const [qty, setQty] = useState(1);
+
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
+  // REDUX
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { product, loading, error } = productList;
@@ -59,6 +78,7 @@ const ProductScreen = () => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Status:</Col>
@@ -67,11 +87,37 @@ const ProductScreen = () => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+
+              {/* If product is in stock, show the quantity dropdown */}
+              {product.countInStock > 0 && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Qty</Col>
+                    <Col xs="auto" className="my-1">
+                      <Form.Control
+                        as="select"
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                      {
+                        [...Array(product.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))
+                      }
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
+
               <ListGroup.Item style={{ padding: "15px" }}>
                 {" "}
                 {/* Adjust the padding here */}
                 <div className="d-flex justify-content-center align-items-center">
                   <button
+                    onClick={addToCartHandler}
                     className="btn btn-block btn-lg btn-dark"
                     type="button"
                     disabled={product.countInStock === 0}

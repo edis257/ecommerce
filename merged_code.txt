@@ -1,0 +1,97 @@
+frontend\src\store.jsx:
+
+import { configureStore } from "@reduxjs/toolkit";
+import productsReducer from './reducers/productsSlice';
+import productReducer from './reducers/productSlice';
+
+const store = configureStore({
+  reducer: {
+    productsList: productsReducer,
+    productList: productReducer,
+  },
+})
+
+export default store;
+
+
+frontend\src\reducers\productsSlice.jsx:
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export const fetchProducts = createAsyncThunk(
+  'products/fetchProducts',
+  async (keyword = '') => {
+    const response = await axios.get(`/api/products${keyword}`);
+    return response.data;
+  }
+);
+
+
+const initialState = {
+  products: [],
+  loading: 'idle',
+  error: null
+}
+
+const productsSlice = createSlice({
+  name: 'productsList',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = 'loading';
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = 'idle';
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = 'idle';
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default productsSlice.reducer;
+
+
+frontend\src\screens\HomeScreen.jsx:
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../reducers/productsSlice';
+import Product from "../components/Product";
+import {Row, Col} from 'react-bootstrap';
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+
+const HomeScreen = () => {
+    const dispatch = useDispatch();
+    const productsList = useSelector((state) => state.productsList);
+    const { products, loading, error } = productsList;
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    if (loading === 'loading') return <Loader />
+    if (error) return <Message variant='danger'>{error}</Message>
+
+    return ( 
+        <div>
+            <Row>
+                {products.map(product => (
+                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                        <Product product={product}/>
+                    </Col>
+                ))} 
+            </Row>
+        </div>
+     );
+}
+ 
+export default HomeScreen;
+
+

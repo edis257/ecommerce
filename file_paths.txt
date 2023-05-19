@@ -1,0 +1,3 @@
+frontend\src\store.jsx
+frontend\src\reducers\productsSlice.jsx
+frontend\src\screens\HomeScreen.jsx
