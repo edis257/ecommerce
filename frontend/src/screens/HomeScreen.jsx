@@ -1,8 +1,10 @@
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../reducers/productsSlice';
+import { fetchProducts } from '../features/productsSlice';
+
 import Product from "../components/Product";
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, Container} from 'react-bootstrap';
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
@@ -19,6 +21,7 @@ const HomeScreen = () => {
     if (error) return <Message variant='danger'>{error}</Message>
 
     return ( 
+        <Container>
         <div>
             <Row>
                 {products.map(product => (
@@ -28,6 +31,7 @@ const HomeScreen = () => {
                 ))} 
             </Row>
         </div>
+        </Container>
      );
 }
  

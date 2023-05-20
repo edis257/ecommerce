@@ -1,3 +1,4 @@
 frontend\src\store.jsx
-frontend\src\reducers\productsSlice.jsx
-frontend\src\screens\HomeScreen.jsx
+frontend\src\features\cartSlice.jsx
+frontend\src\screens\ProductScreen.jsx
+frontend\src\screens\CartScreen.jsx

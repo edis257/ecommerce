@@ -16,7 +16,10 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../reducers/productSlice";
+import { fetchProduct } from "../features/productSlice";
+
+import { addToCart } from "../features/cartSlice"; 
+
 
 
 
@@ -28,6 +31,14 @@ const ProductScreen = (props) => {
   const [qty, setQty] = useState(1);
 
   const addToCartHandler = () => {
+    dispatch(addToCart({
+      product: id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      countInStock: product.countInStock,
+      qty
+    }));
     navigate(`/cart/${id}?qty=${qty}`);
   };
   // REDUX
