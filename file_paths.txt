@@ -1,4 +1,0 @@
-frontend\src\store.jsx
-frontend\src\features\cartSlice.jsx
-frontend\src\screens\ProductScreen.jsx
-frontend\src\screens\CartScreen.jsx

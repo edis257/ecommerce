@@ -5,7 +5,7 @@
 *.log
 
 # Ignore virtual environment
-/venv/
+backend/venv/
 
 # Ignore frontend build artifacts
 /frontend/build/
@@ -39,5 +39,8 @@ __pycache__/
 # Ignore Python testing environments
 **/backend/static/
 
-
+# xuine
+file_paths.txt
+main.py
+merged_code.txt
 
