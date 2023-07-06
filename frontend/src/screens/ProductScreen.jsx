@@ -16,7 +16,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../features/productSlice";
+import { fetchSingleProduct } from "../features/singleProductSlice";
 
 import { addToCart } from "../features/cartSlice"; 
 
@@ -47,7 +47,7 @@ const ProductScreen = (props) => {
   const { product, loading, error } = productList;
 
   useEffect(() => {
-    dispatch(fetchProduct(id));
+    dispatch(fetchSingleProduct(id));
   }, [dispatch, id]);
 
   if (loading === "loading") return <Loader />;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../features/productsSlice';
+import { fetchAllProducts } from '../features/allProductsSlice';
 
 import Product from "../components/Product";
 import {Row, Col, Container} from 'react-bootstrap';
@@ -14,7 +14,7 @@ const HomeScreen = () => {
     const { products, loading, error } = productsList;
 
     useEffect(() => {
-        dispatch(fetchProducts());
+        dispatch(fetchAllProducts());
     }, [dispatch]);
 
     if (loading === 'loading') return <Loader />

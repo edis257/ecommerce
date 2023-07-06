@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchProduct = createAsyncThunk(
-  'product/fetchproduct',
+export const fetchSingleProduct = createAsyncThunk(
+  'singleProduct/fetchSingleProduct',
   async (keyword = '') => {
     const response = await axios.get(`/api/products/${keyword}`);
     return response.data;
   }
 );
-
 
 const initialState = {
   product: [],
@@ -16,24 +15,24 @@ const initialState = {
   error: null
 }
 
-const productSlice = createSlice({
-  name: 'productList',
+const singleProductSlice = createSlice({
+  name: 'singleProduct',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProduct.pending, (state) => {
+      .addCase(fetchSingleProduct.pending, (state) => {
         state.loading = 'loading';
       })
-      .addCase(fetchProduct.fulfilled, (state, action) => {
+      .addCase(fetchSingleProduct.fulfilled, (state, action) => {
         state.loading = 'idle';
         state.product = action.payload;
       })
-      .addCase(fetchProduct.rejected, (state, action) => {
+      .addCase(fetchSingleProduct.rejected, (state, action) => {
         state.loading = 'idle';
         state.error = action.error.message;
       });
   },
 });
 
-export default productSlice.reducer;
+export default singleProductSlice.reducer;
