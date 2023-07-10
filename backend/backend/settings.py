@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig'
 ]
 
+
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 
