@@ -17,7 +17,6 @@ from rest_framework import status
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
-        
         serializer = UserSerializerWithToken(self.user).data
 
         for k, v in serializer.items():
@@ -32,7 +31,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
-    print(data)
     try:
         user = User.objects.create(
             first_name=data['name'],
