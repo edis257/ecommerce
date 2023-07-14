@@ -27,6 +27,20 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Async action for user registration
+export const registerUser = createAsyncThunk(
+  'user/register',
+  async ({ name, email, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`/api/users/register/`, { name, email, password });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -50,8 +64,22 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = 'idle';
         state.error = action.error.message;
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loading = 'loading';
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = 'idle';
+        state.userInfo = action.payload;
+        state.error = null;
+        localStorage.setItem('userInfo', JSON.stringify(action.payload));
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = 'idle';
+        state.error = action.error.message;
       });
   },
+  
 });
 
 export const { logout } = userSlice.actions;
