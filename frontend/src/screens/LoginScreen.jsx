@@ -42,7 +42,7 @@ const LoginScreen = () => {
         {loading === "loading" && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="username">
-            <Form.Label>username Address</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
               type="username"
               placeholder="Enter username"
